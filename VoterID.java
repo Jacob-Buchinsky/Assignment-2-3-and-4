@@ -6,7 +6,7 @@ public class VoterID {
 	ArrayList <ID> userInfo;
 	
 	public void readFile(){
-		File text = new File("VoterText.txt");
+		File text = new File("Voters.txt");
 		userInfo = new ArrayList <ID>();
 		try{
 			Scanner s = new Scanner(text);

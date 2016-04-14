@@ -36,6 +36,9 @@ public class Ballot{
 		}
 		return ballotInfo;
 	}	
+
+	
+	
 	public String[] getNomineeList(){
 		return nomineeList;
 	}

@@ -11,6 +11,11 @@ public class Assig4 {
 		Ballot ballot = new Ballot();
 		ballot.readBallot();
 		ArrayList<BallotObject> _ballotInfo = ballot.getBallotInfo();
+		for(BallotObject category : _ballotInfo){
+			category.makeFiles();
+			
+			
+		}
 		
 			
 		
@@ -24,7 +29,7 @@ public class Assig4 {
 			if(i == (Ballot.numCategories-1)){
 				Window window = new Window(_ballotInfo, (i+1));
 				myFrame.add(window);
-				System.out.println("PLEASE");
+				System.out.println("Buttons have been added");
 			}	
 		}
 		

@@ -14,17 +14,28 @@ public class ID{
 		
 	}
 	public boolean checkID(int voterID){
+		int _voterID = voterID;
 		boolean login = hasVoted;
-		if(voterID == number){
-			System.out.println("Hello "+ fullName);
+		System.out.println("login is " + login);
+		System.out.println(_voterID + "=" + number);
+		if(_voterID == number){
+			System.out.println("Hello00 "+ fullName);
 			JOptionPane.showMessageDialog(null, "Hello " + fullName);
-			login = true;
-			return login;
+			return true;
 		}
 		else{
+			
 			return false;	
 		}
 		
 	}
-	
+	public void checkUser(boolean voted){
+		hasVoted = voted;
+		
+		
+	}
+	public String toStr(){
+		String string = number + ":" + fullName + ":" + hasVoted;
+		return string;
+	}
 }
