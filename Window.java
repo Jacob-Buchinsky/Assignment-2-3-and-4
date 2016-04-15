@@ -1,3 +1,4 @@
+// VERY IMPORTANT!!!!!!!!!!!!!! WINDOW CLASS = BALLOT IN INSTRUCTIONS JUST A DIFFERENT NAME
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -5,17 +6,12 @@ import java.io.*;
 import java.util.*;
 
 public class Window extends JPanel{
+	//Initialize Variables
 	public static JButton login;
 	public JButton confirm;
 	public JPanel loginPanel;
 	public ArrayList<BallotObject> ballotInfo;
 	public ArrayList<ID> userInfo;
-	/*public JButton b1;
-	public JButton b2;
-	public JButton b3;
-	public JButton b4;
-	public JButton b5;
-	*/
 	
 	static ArrayList <JButton> buttonAlist = new ArrayList <JButton> ();
 	static ArrayList <ArrayList<JButton>> seperateButtonL = new ArrayList<ArrayList<JButton>>();
@@ -23,12 +19,13 @@ public class Window extends JPanel{
 	static boolean _login = false;
 	static int voterID;
 	
+	//Creates and adds to Panels
 	public Window(ArrayList<BallotObject> ballotInfo, int balNum){
 		this.ballotInfo = ballotInfo;
 		this.userInfo = userInfo;
 		int i = balNum;
 		System.out.println(i +" = " + Ballot.numCategories);
-		
+		// adds ballot buttons
 		if(i < Ballot.numCategories){
 			setLayout(new GridLayout(10,0,20,20));
 			
@@ -47,19 +44,21 @@ public class Window extends JPanel{
 				btn.setText(_nomineesList[n]);
 				btn.setEnabled(false);
 				buttonAlist.add(btn);
-				add(btn);                 //adding to frame
+				add(btn);                 
 				btn.addActionListener(new ButtonHandler());
 				bList.add(btn);
 		
 				}
 			seperateButtonL.add(bList);	
 		}	
+		//adds confirm and login buttons
 		else if(i == (Ballot.numCategories)){
 			setLayout(new FlowLayout(FlowLayout.CENTER));
 			login = new JButton();
 			confirm = new JButton();
 			login.setText("Login");
 			confirm.setText("Confirm Vote");
+			confirm.setEnabled(false);
 			add(login);
 			add(confirm);
 			login.addActionListener(new thehandler());
@@ -70,6 +69,7 @@ public class Window extends JPanel{
 		
 	
 	}
+	//Listener to login user when clicked
 	class thehandler implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
@@ -82,31 +82,33 @@ public class Window extends JPanel{
 			file.readFile();
 			userInfo = file.getID();
 			voterID = numInput;
-			System.out.println("Monkeybutt");
 			for(ID id: userInfo){
-				System.out.println(_login);
 				LOOGIN = id.checkID(voterID);
-				System.out.println(LOOGIN);
-				if(LOOGIN == true){
-					Window.login.setEnabled(false);
-					Break = 1;
+				if(id.getBool() == false){
+					if(LOOGIN == true){
+						Window.login.setEnabled(false);
+						Break = 1;
+						for( JButton btn : buttonAlist){
+							btn.setEnabled(true);
+						}
+					confirm.setEnabled(true);	
+					}
+					}
+				else if(id.getBool() == true){
+					if(LOOGIN == true){
+						JOptionPane.showMessageDialog(null, "You have already voted!");
+					}
 				}
-				if(Break == 1)
-					break;
+					if(Break == 1)
+						break;
+				}			
 			}
-			System.out.println(_login);
-			if(LOOGIN == true){
-				System.out.println("login = true");
-				for( JButton btn : buttonAlist){
-					System.out.println("Button has been enabled");
-					btn.setEnabled(true);
-				}
-			}	
 			
 				
 			
+			
 		}
-	}
+	//Listener to change button colors when clicked
 	class ButtonHandler implements ActionListener{
 		public JButton _btn;
 		public String winner;
@@ -119,8 +121,6 @@ public class Window extends JPanel{
 						}
 						btn.setForeground(Color.RED);
 						winner = btn.getText();
-						
-						System.out.println(winner);
 					}
 				}
 				
@@ -129,6 +129,7 @@ public class Window extends JPanel{
 					 
 				}
 			}
+	//Listener for when confirm button is clicked
 	class ConfirmHandler implements ActionListener{
 		
 		public String WINNER;
@@ -139,28 +140,27 @@ public class Window extends JPanel{
 			VoterID file = new VoterID();
 			file.readFile();
 			userInfo = file.getID();
+			//Searches through all buttons and add red buttons to an arraylist
 			if (JOptionPane.showConfirmDialog(null, "Confirm", "Are you sure", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				for(ArrayList<JButton> bList: seperateButtonL){
 					for(JButton btn: bList){
-						System.out.println(btn.getForeground());
 						if(btn.getForeground() == Color.RED){
 							WINNER = btn.getText();
 							winnerL.add(WINNER);
-							System.out.println("Winner Added");
 						} 
 						
 					}
 				}
+			//goes through each BallotObject and compares winners against all others
 			int i = 0;	
 			
 			for(BallotObject ballot: ballotInfo){	
 				ballot.compareInfo(winnerL, i);
 				i++;
 			}
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAA");
+			//goes through each user and updates list if they voted
 			for(ID id: userInfo){
 				if(voterID == id.number){
-					System.out.println("login = " + _login);
 					id.checkUser(true);
 				}
 				}
@@ -175,16 +175,25 @@ public class Window extends JPanel{
 			w.close();
 			
 		}
-		catch(Exception killme){
-			System.out.println("FUCKING DO IT");
-			killme.printStackTrace();
+		catch(Exception exc){
+			System.out.println("Error");
+			exc.printStackTrace();
 		}
+		//resets GUI to original status and functionality
+		for(ArrayList<JButton> bList: seperateButtonL){
+					for(JButton btn: bList){
+						btn.setEnabled(false);
+						btn.setForeground(null);
+					}
+		}
+		confirm.setEnabled(false);
+		login.setEnabled(true);
 		
 			}
 			}
 			
 		}
-}
+	}
 	
 
 		

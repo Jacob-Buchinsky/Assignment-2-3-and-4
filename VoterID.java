@@ -4,7 +4,7 @@ import java.text.*;
 
 public class VoterID {
 	ArrayList <ID> userInfo;
-	
+	//Reads voter info from Voters.txt and creates new id object which is stored in an arraylist
 	public void readFile(){
 		File text = new File("Voters.txt");
 		userInfo = new ArrayList <ID>();

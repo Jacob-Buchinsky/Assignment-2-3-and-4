@@ -8,8 +8,12 @@ public class Ballot{
 	String[] nomineeList;
 	ArrayList <BallotObject> ballotInfo;
 	
+	// Reads info from ballot text and creates new ballot object with info as parameters - stored in an arraylist
 	public ArrayList<BallotObject> readBallot (){
-		File ballotDoc = new File("Ballot1.txt");
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Adimin please type in the file name:");
+		String BallotF = scanner.nextLine();
+		File ballotDoc = new File(BallotF);
 		ballotInfo = new ArrayList <BallotObject> ();
 		try{ 
 			Scanner s = new Scanner(ballotDoc);

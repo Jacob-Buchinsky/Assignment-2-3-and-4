@@ -10,7 +10,7 @@ public class BallotObject{
 	int buttonNum = 0;
 
 	
-	
+	//constructor for ballot object
 	public BallotObject(int Num, String Category, String[] nomineeList){
 		number = Num;
 		_number = Integer.toString(number);
@@ -30,6 +30,7 @@ public class BallotObject{
 	public int getbuttonNum(){
 		return buttonNum;
 	}
+	//creates ballot files that votes are stored in
 	public void makeFiles(){
 		try{
 		File file = new File(_number);
@@ -46,8 +47,10 @@ public class BallotObject{
 				System.out.println("MakeFile FAILED!");
 			}
 	}
+	// overwrites ballot txt file and updates vote info
 	public void compareInfo(ArrayList<String> winnerL, int i){
 		int _i = i;
+		int votes = 0;
 		ArrayList<String> stringL = new ArrayList<String>();
 		ArrayList<String> _winnerL = winnerL;
 		File catFile = new File(_number);
@@ -55,13 +58,9 @@ public class BallotObject{
 		Scanner S = new Scanner(catFile);
 		while(S.hasNextLine()){
 			String info = S.nextLine();
-			System.out.println(info);
 			String[] infoList = info.split(":");
-			for(String s : infoList)
-				System.out.println("list content:" +s);
 			String name = infoList[0];
-			int votes = Integer.parseInt(infoList[1]);
-			
+			votes = Integer.parseInt(infoList[1]);
 			if(winnerL.get(_i).equals(name)){
 				votes++;
 			}
@@ -86,7 +85,7 @@ public class BallotObject{
 			Writer.close();
 			}
 			catch(Exception e){
-				System.out.println("Fuck this project");
+				System.out.println("Error");
 				
 			}
 			

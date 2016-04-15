@@ -7,19 +7,18 @@ public class ID{
 	int number;
 	String fullName;
 	boolean hasVoted;
+	//constructor for id object
 	public ID(int userID, String name, boolean bool){
 		number = userID;
 		fullName = name;
 		hasVoted = bool;
 		
 	}
+	//checks if user is the "database"/voters.txt
 	public boolean checkID(int voterID){
 		int _voterID = voterID;
 		boolean login = hasVoted;
-		System.out.println("login is " + login);
-		System.out.println(_voterID + "=" + number);
 		if(_voterID == number){
-			System.out.println("Hello00 "+ fullName);
 			JOptionPane.showMessageDialog(null, "Hello " + fullName);
 			return true;
 		}
@@ -29,8 +28,13 @@ public class ID{
 		}
 		
 	}
-	public void checkUser(boolean voted){
-		hasVoted = voted;
+	public void checkUser(boolean hasvoted){
+		hasVoted = hasvoted;
+		
+	} 
+	
+	public boolean getBool(){
+		return hasVoted;
 		
 		
 	}
