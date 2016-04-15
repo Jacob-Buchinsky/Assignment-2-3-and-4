@@ -4,6 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
+import java.nio.file.*;
 
 public class Window extends JPanel{
 	//Initialize Variables
@@ -164,8 +165,8 @@ public class Window extends JPanel{
 					id.checkUser(true);
 				}
 				}
-				try{
-			File filee = new File("Voters.txt");
+		try{
+			File filee = new File("Voters.txt");	
 			PrintWriter w = new PrintWriter(filee);
 			
 			for(ID id: userInfo){
@@ -174,11 +175,18 @@ public class Window extends JPanel{
 			
 			w.close();
 			
+			
+			
+			
+			
+			
 		}
-		catch(Exception exc){
+		catch(IOException exc){
 			System.out.println("Error");
 			exc.printStackTrace();
 		}
+		
+		
 		//resets GUI to original status and functionality
 		for(ArrayList<JButton> bList: seperateButtonL){
 					for(JButton btn: bList){
